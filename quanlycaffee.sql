@@ -29,7 +29,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `ban` (
   `MaBan` int(11) NOT NULL,
   `TenBan` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-  `TrangThai` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `TrangThai` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  UNIQUE (`TenBan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
