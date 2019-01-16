@@ -13,7 +13,7 @@ import java.util.Date;
  * @author ThangIKCU
  */
 public class HoaDon {
-    private int MaHoaDon, GiamGia, TongTien, TrangThai ,MaBan;
+    private int MaHoaDon, GiamGia, TongTien, TrangThai ,MaBan,MaTK;
     private Date GioDen;
     
     public HoaDon(){
@@ -23,14 +23,16 @@ public class HoaDon {
         TrangThai =0;
         MaBan = 0;
         GioDen=null;
+        MaTK = 0;
     }
-     public HoaDon(int mahoadon, int giamgia, int maban, Date gioden, int tongtien, int trangthai){
+     public HoaDon(int mahoadon, int giamgia, int maban, Date gioden, int tongtien, int trangthai,int matk){
         this.MaHoaDon =mahoadon;
         this.GiamGia =giamgia;
         this.TongTien =tongtien;
         TrangThai =trangthai;
         MaBan =maban;
         GioDen=gioden;
+        MaTK = matk;
     } 
      
     public void SetMaHD(int ma){
@@ -69,5 +71,10 @@ public class HoaDon {
     public int GetTrangThai(){
         return TrangThai;
     }
-    
+    public void SetMaTK(int Matk){
+        MaTK = Matk;
+    }
+    public int GetMaTK(){
+        return MaTK;
+    }
 }

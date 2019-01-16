@@ -89,7 +89,7 @@ public final class frmMain extends javax.swing.JFrame {
         jpLayout.updateUI();
 //        mp3 = new MP3 ("src/Sound/Ai la trieu phu - ai la trieu phu.MP3");
 //        mp3.play();
-        btnmute.setVisible(false);
+//        btnmute.setVisible(false);
  
         //Khai bao dinh dang ngay thang
         
@@ -217,8 +217,6 @@ public final class frmMain extends javax.swing.JFrame {
         jpLayout = new javax.swing.JPanel();
         btnthoat = new javax.swing.JButton();
         btnTrangChu = new javax.swing.JButton();
-        btnSound = new javax.swing.JButton();
-        btnmute = new javax.swing.JButton();
         lbltime = new javax.swing.JLabel();
         lblpv = new javax.swing.JLabel();
         lbldat = new javax.swing.JLabel();
@@ -234,7 +232,6 @@ public final class frmMain extends javax.swing.JFrame {
         setLocation(new java.awt.Point(0, 0));
         setLocationByPlatform(true);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1280, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -358,22 +355,6 @@ public final class frmMain extends javax.swing.JFrame {
             }
         });
 
-        btnSound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/Sound.png"))); // NOI18N
-        btnSound.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnSound.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSoundActionPerformed(evt);
-            }
-        });
-
-        btnmute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/mute.png"))); // NOI18N
-        btnmute.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnmute.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnmuteActionPerformed(evt);
-            }
-        });
-
         lbltime.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lbltime.setForeground(new java.awt.Color(51, 102, 0));
         lbltime.setText("jLabel1");
@@ -398,9 +379,7 @@ public final class frmMain extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jpLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 1254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(jpLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 1254, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnTrangChu)
                         .addGap(18, 18, 18)
@@ -408,60 +387,56 @@ public final class frmMain extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnQuanLy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnThongKe)
-                        .addGap(18, 18, 18)
                         .addComponent(btnKho)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnThongKe)
                         .addGap(18, 18, 18)
                         .addComponent(btnThietLap)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbltime)
-                            .addComponent(lbldat)
-                            .addComponent(lblpv))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnmute, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSound, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblpv)
+                            .addComponent(lbldat))
+                        .addGap(37, 37, 37)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtqtv))
-                            .addComponent(btnthoat))
-                        .addGap(41, 41, 41))))
+                            .addComponent(btnthoat))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnQuanLy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTrangChu))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnKho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnThietLap)
-                        .addComponent(lblpv))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnQuanLy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnTrangChu)
+                                .addComponent(btnKho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnThietLap))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtqtv)
                                     .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSound, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnthoat)
-                                    .addComponent(btnmute, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lbldat))
-                        .addGap(3, 3, 3))
+                                .addComponent(btnthoat)
+                                .addGap(3, 3, 3)))
+                        .addGap(7, 7, 7))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbltime)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(8, 8, 8)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lbltime)
+                                .addGap(15, 15, 15))
+                            .addComponent(lblpv))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbldat)
+                        .addGap(18, 18, 18)))
                 .addComponent(jpLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -484,7 +459,7 @@ public final class frmMain extends javax.swing.JFrame {
                 .addGap(266, 266, 266)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
         );
 
         pack();
@@ -571,22 +546,6 @@ public final class frmMain extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnTrangChuMousePressed
     MP3 nhacnen;
-    private void btnSoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSoundActionPerformed
-        // TODO add your handling code here:
-//        nhacnen = new MP3 ("src/Sound/Fur Elise - Richard Clayderman.MP3");
-//        nhacnen.play();
-        btnSound.setVisible(false);
-        btnmute.setVisible(true);
-        
-        
-    }//GEN-LAST:event_btnSoundActionPerformed
-
-    private void btnmuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmuteActionPerformed
-//       nhacnen.stop();
-       btnSound.setVisible(true);
-       btnmute.setVisible(false);
-    }//GEN-LAST:event_btnmuteActionPerformed
-
     private void btnQuanLyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyActionPerformed
         // TODO add your handling code here:
         
@@ -603,11 +562,9 @@ public final class frmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnBanHang;
     private javax.swing.JButton btnKho;
     private javax.swing.JButton btnQuanLy;
-    private javax.swing.JButton btnSound;
     private javax.swing.JButton btnThietLap;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JButton btnTrangChu;
-    private javax.swing.JButton btnmute;
     private javax.swing.JButton btnthoat;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;

@@ -181,7 +181,7 @@ public class frmLogIn extends javax.swing.JFrame {
     public void thoat(){
         txtUserName.setText("");
         txtPassWord.setText("");
-        txtPassWord.requestFocus();
+        txtUserName.requestFocus();
     }
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         // TODO add your handling code here:

@@ -83,6 +83,7 @@ public final class JpThongKe extends javax.swing.JPanel {
         tbmodel.addColumn("Thành tiền");
         tbmodel.addColumn("Điểm bán");
         tbmodel.addColumn("Các món");
+        tbmodel.addColumn("Người bán");
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
         if (arrTable.size() >0) {
             int hd = 0, tongtien=0, tongtienmon =0,giam=0, tonggiam =0;
@@ -92,6 +93,7 @@ public final class JpThongKe extends javax.swing.JPanel {
                 String tenban = cn.GetBan(td.GetMaBan()).get(0).GetTenBan();
                 ArrayList<DsOrder> order = cn.GetDsOrder(td.GetMaHD());
                 String cacmon = "";
+                String fullname = cn.getFullName(td.GetMaTK());
                 int tienmon =0;
                 for(DsOrder ds : order){
                     tienmon += ds.GetGia() * ds.GetSoLuong();
@@ -111,7 +113,14 @@ public final class JpThongKe extends javax.swing.JPanel {
                         dv = "("+String.valueOf(td.GetGiamGia())+"%)";
                     }
                     tonggiam += giam;
-                tbmodel.addRow(new Object[]{td.GetMaHD(), sf.format(td.GetGioDen()), chuyentien.format(tienmon), chuyentien.format(giam)+dv , chuyentien.format(td.GetTongTien()), tenban, cacmon});
+                tbmodel.addRow(new Object[]{td.GetMaHD(),
+                    sf.format(td.GetGioDen()),
+                    chuyentien.format(tienmon),
+                    chuyentien.format(giam)+dv ,
+                    chuyentien.format(td.GetTongTien()),
+                    tenban,
+                    cacmon,
+                    fullname});
             }
             lblgiam.setText(chuyentien.format(tonggiam)+" VNĐ");
             lbltienmon.setText(chuyentien.format(tongtienmon)+" VNĐ");
@@ -617,6 +626,7 @@ layout.setHorizontalGroup(
         tbmodel.addColumn("Thành tiền");
         tbmodel.addColumn("Điểm bán");
         tbmodel.addColumn("Các món");
+        tbmodel.addColumn("Người bán");
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
         if (arrTable.size() >0) {
             int hd = 0, tongtien=0, tongtienmon =0,giam=0, tonggiam =0;
@@ -628,6 +638,7 @@ layout.setHorizontalGroup(
                 if(order.size() >0){
                     hd++;
                     String cacmon = "";
+                    String fullname = cn.getFullName(td.GetMaTK());
                     int tienmon =0;
                     for(DsOrder ds : order){
                         tienmon += ds.GetGia() * ds.GetSoLuong();
@@ -647,7 +658,14 @@ layout.setHorizontalGroup(
                             dv = "("+String.valueOf(td.GetGiamGia())+"%)";
                         }
                         tonggiam += giam;
-                    tbmodel.addRow(new Object[]{td.GetMaHD(), sf.format(td.GetGioDen()), chuyentien.format(tienmon), chuyentien.format(giam)+dv , chuyentien.format(td.GetTongTien()), tenban, cacmon});
+                    tbmodel.addRow(new Object[]{td.GetMaHD(),
+                        sf.format(td.GetGioDen()),
+                        chuyentien.format(tienmon),
+                        chuyentien.format(giam)+dv ,
+                        chuyentien.format(td.GetTongTien()),
+                        tenban,
+                        cacmon,
+                        fullname});
             
                 }
             }

@@ -313,7 +313,7 @@ public class Jp_QLThucDon extends javax.swing.JPanel {
                 sp += tenban + "\n";
             }
             int qs;
-            qs = JOptionPane.showConfirmDialog(null, "Xóa món: \n " + sp, "Xóa món", JOptionPane.YES_NO_OPTION);
+            qs = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa " + sp+" không?", "Xóa món", JOptionPane.YES_NO_OPTION);
             if (qs == JOptionPane.YES_OPTION) {
                 boolean xoa = cn.DeleteThucDon(ListMaBan);
                 if (xoa == true) {

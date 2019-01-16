@@ -253,7 +253,7 @@ public class Jp_QLNhomMon extends javax.swing.JPanel {
                 sp += tennhom + "\n";
             }
             int qs;
-            qs = JOptionPane.showConfirmDialog(null, "Xóa nhóm: \n " + sp, "Xóa nhóm", JOptionPane.YES_NO_OPTION);
+            qs = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa nhóm " + sp+" không?", "Xóa nhóm", JOptionPane.YES_NO_OPTION);
             if (qs == JOptionPane.YES_OPTION) {
                 boolean xoa = cn.DeleteNhom(listmamon);
 

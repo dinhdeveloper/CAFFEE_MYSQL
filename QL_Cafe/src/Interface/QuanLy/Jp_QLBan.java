@@ -255,7 +255,7 @@ public class Jp_QLBan extends javax.swing.JPanel {
                 sp += tenban + "\n";
             }
             int qs;
-            qs = JOptionPane.showConfirmDialog(null, "Xóa bàn: \n " + sp, "Xóa bàn", JOptionPane.YES_NO_OPTION);
+            qs = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa " + sp+" không?", "Xóa bàn", JOptionPane.YES_NO_OPTION);
             if (qs == JOptionPane.YES_OPTION) {
                 boolean xoa = cn.DeleteBan(ListMaBan);
 

@@ -171,7 +171,7 @@ public class ConnectSQL {
     }    
     public int ThanhToan(HoaDon hd){
         int update = 0;
-        String sql = "UPDATE hoadon SET TongTien = '"+hd.GetTongTien()+"', TrangThai = 1 WHERE MaHoaDon = '"+hd.GetMaHD()+"'";
+        String sql = "UPDATE hoadon SET TongTien = '"+hd.GetTongTien()+"', TrangThai = 1,MaTK = '"+hd.GetMaTK()+"' WHERE MaHoaDon = '"+hd.GetMaHD()+"'";
         try{
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
@@ -261,7 +261,7 @@ public class ConnectSQL {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
-                arrhd = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6));
+                arrhd = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6),rs.getInt(7));
             }
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách hóa đơn !");
@@ -553,12 +553,13 @@ public class ConnectSQL {
     } 
     public int InserTK(TaiKhoan b){
         int insert = 0;
-        String sql = "Insert into taikhoan (username, password, lv) values ('"+b.GetUsername()+"', '"+b.GetPassword()+"', '"+b.GetLv()+"')";
+        String sql = "Insert into taikhoan (username, password, lv,fullname) values ('"+b.GetUsername()+"', '"+b.GetPassword()+"', '"+b.GetLv()+"','"+b.getFullName()+"')";
         try{
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
-            
+            JOptionPane.showMessageDialog(null,"Thêm tài khoản thành công");
         }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,"Tên tài khoản không được trùng");
         }
         return insert;
     } 
@@ -595,7 +596,7 @@ public class ConnectSQL {
     }
     public int UpdateTK(TaiKhoan b){
         int update = 0;
-        String sql = "UPDATE taikhoan SET username = '"+b.GetUsername()+"', password = '"+b.GetPassword()+"', lv = '"+b.GetLv()+"' WHERE id = '"+b.GetID()+"'";
+        String sql = "UPDATE taikhoan SET username = '"+b.GetUsername()+"', password = '"+b.GetPassword()+"', lv = '"+b.GetLv()+"',fullname = '"+b.getFullName()+"' WHERE id = '"+b.GetID()+"'";
         try{
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
@@ -613,7 +614,7 @@ public ArrayList<HoaDon> GetDSHD(){
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<HoaDon>();
             while(rs.next()){
-                HoaDon order = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6));
+                HoaDon order = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6),rs.getInt(7));
                 arrDs.add(order);
             }
         }catch(SQLException ex){
@@ -724,4 +725,20 @@ public ArrayList<HoaDon> GetDSHD(){
         }
         return arrDs;        
     }     
+     
+     public String getFullName(int MaTK){
+        String fullname = null;
+        String sql = "SELECT fullname FROM hoadon,taikhoan  WHERE (hoadon.MaTK = taikhoan.id) AND MaTK ='" + MaTK + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                fullname = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Không lấy Tên!");
+        }
+        return fullname;
+    }
 }

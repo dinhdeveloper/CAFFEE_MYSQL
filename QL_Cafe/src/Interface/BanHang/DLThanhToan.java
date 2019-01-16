@@ -5,11 +5,13 @@
  */
 package Interface.BanHang;
 
+import Interface.Run;
 import Models.Ban;
 import Models.HoaDon;
 import Mysql.ConnectSQL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -196,20 +198,29 @@ public class DLThanhToan extends javax.swing.JDialog {
     }//GEN-LAST:event_txtTienDuaKeyReleased
 
     private void btnxacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxacnhanActionPerformed
-        Ban b = new Ban();
-        b.SetTrangThai("Trống");
-        b.SetMaBan(MaBan);
-        cn.UpDateTrangThaiBan(b);
-        
-        HoaDon hd = new HoaDon();
-        hd.SetTongTien(tong);
-        hd.SetMaHD(MaHD);
-        cn.ThanhToan(hd);
-        
-        jpBanHang.bh.FillBan();
-        JpGoiMon.gm.removeAll();
-        jpBanHang.bh.fillLb();
-        this.dispose();
+        int n = Run.tk.GetID();    
+        if (txtTienDua.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Bạn Chưa Nhập Tiền");
+        } else {
+            Ban b = new Ban();
+            b.SetTrangThai("Trống");
+            b.SetMaBan(MaBan);
+            cn.UpDateTrangThaiBan(b);
+            HoaDon hd = new HoaDon();
+            hd.SetTongTien(tong);
+            hd.SetMaHD(MaHD);
+            hd.SetMaTK(n);
+            if (tong > Integer.parseInt(txtTienDua.getText())) {
+                JOptionPane.showMessageDialog(null, "Số Tiền Không Phù Hợp");
+            } else {
+                cn.ThanhToan(hd);
+                jpBanHang.bh.FillBan();
+                JpGoiMon.gm.removeAll();
+                jpBanHang.bh.fillLb();
+                this.dispose();
+            }
+
+        }
     }//GEN-LAST:event_btnxacnhanActionPerformed
 
     /**

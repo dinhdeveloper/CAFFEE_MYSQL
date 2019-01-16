@@ -251,7 +251,7 @@ public class Jp_QLTaiKhoan extends javax.swing.JPanel {
                 sp += tenban + "\n";
             }
             int qs;
-            qs = JOptionPane.showConfirmDialog(null, "Xóa tài khoản: \n " + sp, "Xóa tài khoản", JOptionPane.YES_NO_OPTION);
+            qs = JOptionPane.showConfirmDialog(null, "Bạn muốn xóa tài khoản " + sp+" không?", "Xóa tài khoản", JOptionPane.YES_NO_OPTION);
             if (qs == JOptionPane.YES_OPTION) {
                 boolean xoa = cn.DeleteTaiKhoan(ListMaBan);
 
