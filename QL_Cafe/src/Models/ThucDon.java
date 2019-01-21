@@ -7,7 +7,7 @@ package Models;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class ThucDon {
     private String MaMon, TenMon, MaLoai, DVT;

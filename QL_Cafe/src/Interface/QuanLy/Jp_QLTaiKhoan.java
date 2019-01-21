@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 
 public class Jp_QLTaiKhoan extends javax.swing.JPanel {

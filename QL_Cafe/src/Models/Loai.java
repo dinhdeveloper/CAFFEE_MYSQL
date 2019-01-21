@@ -7,7 +7,7 @@ package Models;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class Loai {
     private String MaLoai, TenLoai, MauSac;

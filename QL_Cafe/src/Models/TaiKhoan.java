@@ -7,7 +7,7 @@ package Models;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public class TaiKhoan {
     private int id, lv;

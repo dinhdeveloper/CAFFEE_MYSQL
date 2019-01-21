@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public final class JpThongKe extends javax.swing.JPanel {
     ConnectSQL cn = new ConnectSQL();

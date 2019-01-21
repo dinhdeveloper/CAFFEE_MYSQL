@@ -16,7 +16,7 @@ import javax.swing.event.ChangeListener;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class DLQl_Sua_Nhom extends javax.swing.JDialog {
     ConnectSQL cn = new ConnectSQL();

@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class jpThucDon extends javax.swing.JPanel {
     ConnectSQL cn = new ConnectSQL();

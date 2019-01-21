@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author ThangIKCU
+ * @author 
  */
 public class DLSoLuong extends javax.swing.JDialog {
     ConnectSQL cn = new ConnectSQL();

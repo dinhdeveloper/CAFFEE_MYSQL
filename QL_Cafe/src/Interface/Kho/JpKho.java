@@ -7,7 +7,7 @@ package Interface.Kho;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public class JpKho extends javax.swing.JPanel {
 

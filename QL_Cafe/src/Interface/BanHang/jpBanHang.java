@@ -18,7 +18,7 @@ import javax.swing.border.LineBorder;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public final class jpBanHang extends javax.swing.JPanel {
     ConnectSQL cn = new ConnectSQL();
@@ -135,13 +135,13 @@ public final class jpBanHang extends javax.swing.JPanel {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/logo.png"))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Free");
+        jLabel3.setText("Trống");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Serving");
+        jLabel4.setText("Đang Phục Vụ");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Reserved");
+        jLabel5.setText("Đã Đặt Trước");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

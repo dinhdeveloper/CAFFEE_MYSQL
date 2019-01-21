@@ -7,7 +7,7 @@ package Interface.Home;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public class JpHome extends javax.swing.JPanel {
 

@@ -9,7 +9,7 @@ import Models.TaiKhoan;
 
 /**
  *
- * @author 
+ * @author CanhDinh
  */
 public class Run {
 

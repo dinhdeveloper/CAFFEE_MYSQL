@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class ConnectSQL {
     private Connection cn;

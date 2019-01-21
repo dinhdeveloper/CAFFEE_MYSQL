@@ -7,7 +7,7 @@ package Models;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class Ban {
     private String  TenBan, TrangThai;

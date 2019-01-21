@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class JpDoiMk extends javax.swing.JPanel {
     ConnectSQL cn = new ConnectSQL();

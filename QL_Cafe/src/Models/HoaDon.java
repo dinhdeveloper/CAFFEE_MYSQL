@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class HoaDon {
     private int MaHoaDon, GiamGia, TongTien, TrangThai ,MaBan,MaTK;

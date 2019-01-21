@@ -7,7 +7,7 @@ package Interface.Setting;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public class JpThongTin extends javax.swing.JPanel {
 

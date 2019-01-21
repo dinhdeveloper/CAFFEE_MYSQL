@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class Jp_QLThucDon extends javax.swing.JPanel {
     ConnectSQL cn = new ConnectSQL();

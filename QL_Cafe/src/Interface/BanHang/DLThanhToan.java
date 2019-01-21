@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class DLThanhToan extends javax.swing.JDialog {
     NumberFormat chuyentien = new DecimalFormat("#,###,###");

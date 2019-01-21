@@ -172,7 +172,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Free"/>
+            <Property name="text" type="java.lang.String" value="Tr&#x1ed1;ng"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
@@ -184,7 +184,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Serving"/>
+            <Property name="text" type="java.lang.String" value="&#x110;ang Ph&#x1ee5;c V&#x1ee5;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -192,7 +192,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Reserved"/>
+            <Property name="text" type="java.lang.String" value="&#x110;&#xe3; &#x110;&#x1eb7;t Tr&#x1b0;&#x1edb;c"/>
           </Properties>
         </Component>
       </SubComponents>

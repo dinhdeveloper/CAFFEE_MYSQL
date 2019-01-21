@@ -10,7 +10,7 @@ import Mysql.ConnectSQL;
 
 /**
  *
- * @author ThangIKCU
+ * @author 
  */
 public class DLGiamGia extends javax.swing.JDialog {
     ConnectSQL cn = new ConnectSQL();
@@ -78,7 +78,7 @@ public class DLGiamGia extends javax.swing.JDialog {
         });
 
         jComboBox1.setEditable(true);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "15", "20", "25", "30", "35", "40", "45", "50" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50" }));
         jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jComboBox1KeyReleased(evt);

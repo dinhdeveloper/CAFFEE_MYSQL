@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public class JpSetting extends javax.swing.JPanel {
 

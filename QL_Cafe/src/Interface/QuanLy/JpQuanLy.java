@@ -7,7 +7,7 @@ package Interface.QuanLy;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class JpQuanLy extends javax.swing.JPanel {
 

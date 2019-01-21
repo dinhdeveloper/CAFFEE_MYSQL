@@ -12,7 +12,7 @@ import javax.swing.JRootPane;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public class frmLogIn extends javax.swing.JFrame {
     ConnectSQL cn = new ConnectSQL();

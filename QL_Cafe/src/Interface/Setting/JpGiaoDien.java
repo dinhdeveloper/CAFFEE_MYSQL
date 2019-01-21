@@ -7,7 +7,7 @@ package Interface.Setting;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public class JpGiaoDien extends javax.swing.JPanel {
 

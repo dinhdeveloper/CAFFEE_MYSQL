@@ -7,7 +7,7 @@ package Models;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class ChiTietHD {
     private int MaChiTietHD, MaHoaDon, SoLuong, Gia;

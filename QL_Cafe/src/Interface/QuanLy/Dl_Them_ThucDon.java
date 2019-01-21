@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class Dl_Them_ThucDon extends javax.swing.JDialog {
     ConnectSQL cn = new ConnectSQL();

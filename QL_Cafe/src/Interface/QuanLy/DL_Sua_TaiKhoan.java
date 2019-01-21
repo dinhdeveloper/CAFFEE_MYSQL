@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class DL_Sua_TaiKhoan extends javax.swing.JDialog {
     ConnectSQL cn = new ConnectSQL();

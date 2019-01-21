@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ThangIKCU
+ * @author CanhDinh
  */
 public class DLQl_Sua_Ban extends javax.swing.JDialog {
     ConnectSQL cn = new ConnectSQL();

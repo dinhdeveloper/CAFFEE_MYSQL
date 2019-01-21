@@ -33,7 +33,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author TRUNG HÒA
+ * @author CanhDinh
  */
 public final class JpGoiMon extends javax.swing.JPanel {
     String TenBan;
