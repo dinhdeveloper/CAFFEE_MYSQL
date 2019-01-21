@@ -33,15 +33,16 @@ public class Jp_QLTaiKhoan extends javax.swing.JPanel {
         DefaultTableModel tbmodel = new DefaultTableModel();
 
         tbmodel.addColumn("ID");
+        tbmodel.addColumn("Họ và tên");
         tbmodel.addColumn("Tên tài khoản");
         tbmodel.addColumn("Mật khẩu");
-         tbmodel.addColumn("Level");
+        tbmodel.addColumn("Level");
 
         if (arrTable != null) {
             int soban = 0;
             for (TaiKhoan b : arrTable) {
                 soban++;
-                tbmodel.addRow(new Object[]{b.GetID(), b.GetUsername(), b.GetPassword(), b.GetLv()});
+                tbmodel.addRow(new Object[]{b.GetID(),b.getFullName(), b.GetUsername(), b.GetPassword(), b.GetLv()});
             }
             lblthongtin.setText(String.valueOf(soban)+" tài khoản");
         } else {
@@ -254,10 +255,9 @@ public class Jp_QLTaiKhoan extends javax.swing.JPanel {
             qs = JOptionPane.showConfirmDialog(null, "Bạn muốn xóa tài khoản " + sp+" không?", "Xóa tài khoản", JOptionPane.YES_NO_OPTION);
             if (qs == JOptionPane.YES_OPTION) {
                 boolean xoa = cn.DeleteTaiKhoan(ListMaBan);
-
                 if (xoa == true) {
                     FillTable();
- 
+                    JOptionPane.showMessageDialog(null, "Xóa tài khoản thành công");
                 }else
                 JOptionPane.showMessageDialog(null, "Không xóa được tài khoản !");
 

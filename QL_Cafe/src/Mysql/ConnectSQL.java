@@ -544,6 +544,7 @@ public class ConnectSQL {
                 sql = "Delete From taikhoan Where id = '"+ma+"'";
                 Statement st = cn.createStatement();
                 st.executeUpdate(sql);
+                System.out.println(ma);
             } 
             check = true;
         }catch(SQLException ex){
