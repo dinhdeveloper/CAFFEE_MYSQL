@@ -187,8 +187,7 @@ public class frmLogIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         String user, pass;
         user = txtUserName.getText();
-        pass = txtPassWord.getText();
-
+        pass = txtPassWord.getText(); 
         TaiKhoan tk = new TaiKhoan();
         tk.SetUsername(user);
         tk.SetPassword(pass);

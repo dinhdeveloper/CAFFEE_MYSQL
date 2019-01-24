@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="976c11df-8d57-4c7b-bb75-a89654634556">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     chitiethd.`MaChiTietHD` AS chitiethd_MaChiTietHD,
+     chitiethd.`MaHoaDon` AS chitiethd_MaHoaDon,
+     chitiethd.`SoLuong` AS chitiethd_SoLuong,
+     hoadon.`MaBan` AS hoadon_MaBan,
+     hoadon.`GioDen` AS hoadon_GioDen,
+     hoadon.`TongTien` AS hoadon_TongTien,
+     thucdon.`TenMon` AS thucdon_TenMon,
+     taikhoan.`fullname` AS taikhoan_fullname
+FROM
+     `hoadon` hoadon INNER JOIN `chitiethd` chitiethd ON hoadon.`MaHoaDon` = chitiethd.`MaHoaDon`
+     INNER JOIN `thucdon` thucdon ON chitiethd.`MaMon` = thucdon.`MaMon`
+     INNER JOIN `taikhoan` taikhoan ON hoadon.`MaTK` = taikhoan.`id`]]>
+	</queryString>
+	<field name="chitiethd_MaChiTietHD" class="java.lang.Integer"/>
+	<field name="chitiethd_MaHoaDon" class="java.lang.Integer"/>
+	<field name="chitiethd_SoLuong" class="java.lang.Integer"/>
+	<field name="hoadon_MaBan" class="java.lang.Integer"/>
+	<field name="hoadon_GioDen" class="java.sql.Timestamp"/>
+	<field name="hoadon_TongTien" class="java.lang.Integer"/>
+	<field name="thucdon_TenMon" class="java.lang.String"/>
+	<field name="taikhoan_fullname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="270" y="0" width="284" height="62" uuid="826c4dcc-8899-4aa0-be13-64840240d45b"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[THỐNG KÊ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="694de403-70aa-4e25-93b0-d648cf61926d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="100" height="15" forecolor="#736343" uuid="69853ce4-2156-46a4-95f5-2184b8043419"/>
+				<text><![CDATA[Mã Hóa Đơn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="100" y="0" width="100" height="15" forecolor="#736343" uuid="89a14043-e57c-410c-b19d-e0f514f0f029"/>
+				<text><![CDATA[Mã Chi Tiết Hóa Đơn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="200" y="0" width="100" height="15" forecolor="#736343" uuid="ad100be2-7c79-4528-a6e7-cd68d536a807"/>
+				<text><![CDATA[Số Lượng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="300" y="0" width="100" height="15" forecolor="#736343" uuid="40ae7f65-cf3d-48ae-a962-b9e7fffdd679"/>
+				<text><![CDATA[Mã Bàn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="400" y="0" width="100" height="15" forecolor="#736343" uuid="2a3251ee-a283-4a14-a2c7-5329347ac0fd"/>
+				<text><![CDATA[Giờ Đến]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="500" y="0" width="100" height="15" forecolor="#736343" uuid="2611cb60-9be5-44b7-b042-19b499e6a7ab"/>
+				<text><![CDATA[Tổng Tiền]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="600" y="0" width="100" height="15" forecolor="#736343" uuid="fa700081-4069-476b-b73b-a7c83e924ba2"/>
+				<text><![CDATA[Tên Món]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="700" y="0" width="100" height="15" forecolor="#736343" uuid="ea9b75c0-5f5f-4808-9642-ceea3cb31d61"/>
+				<text><![CDATA[Người Bán]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="96ad9091-dfde-4b78-953c-ec41a6367507"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="100" height="15" uuid="fa6f5a40-76c6-46f6-8278-462920434bae"/>
+					<box leftPadding="30"/>
+					<textFieldExpression><![CDATA[$F{chitiethd_MaHoaDon}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="100" y="0" width="100" height="15" uuid="09a26e41-e0f9-4621-9ae5-26636cf78dea"/>
+					<box leftPadding="15"/>
+					<textFieldExpression><![CDATA[$F{chitiethd_MaChiTietHD}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="200" y="0" width="100" height="15" uuid="0a84c0a3-4e8d-4880-b7d1-cb08f40cb646"/>
+					<box leftPadding="20"/>
+					<textFieldExpression><![CDATA[$F{chitiethd_SoLuong}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="300" y="0" width="100" height="15" uuid="20a719f0-6737-416c-8d32-16d249c836bc"/>
+					<box leftPadding="15"/>
+					<textFieldExpression><![CDATA[$F{hoadon_MaBan}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="400" y="0" width="100" height="15" uuid="549d4514-c762-470e-8207-43587e0516dd"/>
+					<textFieldExpression><![CDATA[$F{hoadon_GioDen}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="500" y="0" width="100" height="15" uuid="5ceb0c37-d3bd-468a-a6be-3b50bb715f73"/>
+					<textFieldExpression><![CDATA[$F{hoadon_TongTien}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="600" y="0" width="100" height="15" uuid="146436b2-5b21-4c7e-93b1-9b1a3e0c1253"/>
+					<textFieldExpression><![CDATA[$F{thucdon_TenMon}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="700" y="0" width="100" height="15" uuid="64652a2c-bf84-4c10-93ca-5ed9b232e941"/>
+					<textFieldExpression><![CDATA[$F{taikhoan_fullname}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="c319fccd-65dc-4927-85a5-c2817050e331"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="4a00f088-62e3-4367-bd80-21dbcd0c6b91"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="af86ce3c-8efc-49a1-afe0-d0c6d4ee5c6c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="59e15735-f59d-4c9d-ade3-f4fdfa29245f"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="c49ab1ff-a182-497c-b656-f76b19ef1952"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

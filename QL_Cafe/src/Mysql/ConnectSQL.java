@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
@@ -21,656 +22,770 @@ import javax.swing.JOptionPane;
  * @author CanhDinh
  */
 public class ConnectSQL {
+
     private Connection cn;
-    
-    public ConnectSQL(){
-        try{
+
+    public ConnectSQL() {
+        try {
             cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlycaffee?useUnicode=true&characterEncoding=utf8", "root", "");
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Kết nối thất bại !");
-        }        
+        }
     }
-    public ArrayList<Loai> GetLoai(){
+
+    public String GetAll(int maCTHD) {
+        String arrHoaDon = null;
+        String sql = "SELECT chitiethd.`MaChiTietHD` AS chitiethd_MaChiTietHD,"
+                + " chitiethd.`SoLuong` AS chitiethd_SoLuong, hoadon.`MaBan` "
+                + "AS hoadon_MaBan, hoadon.`TongTien` AS hoadon_TongTien,"
+                + " taikhoan.`fullname` AS taikhoan_fullname, "
+                + "thucdon.`TenMon` AS thucdon_TenMon, thucdon.`DVT`"
+                + " AS thucdon_DVT, hoadon.`GioDen` AS hoadon_GioDen "
+                + "FROM `hoadon` hoadon INNER JOIN `chitiethd` "
+                + "chitiethd ON hoadon.`MaHoaDon` = chitiethd.`MaHoaDon`"
+                + " INNER JOIN `taikhoan` taikhoan ON "
+                + "hoadon.`MaTK` = taikhoan.`id` INNER JOIN `thucdon` thucdon "
+                + "ON chitiethd.`MaMon` = thucdon.`MaMon` "
+                + "WHERE chitiethd.MaChiTietHD ='" + maCTHD + "' ";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                arrHoaDon = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
+        }
+        return arrHoaDon;
+    }
+
+    public ArrayList<Loai> GetLoai() {
         ArrayList<Loai> arrloai = null;
         String sql = "Select * From nhommon";
-        try{
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrloai = new ArrayList<Loai>();
-            while(rs.next()){
+            while (rs.next()) {
                 Loai sp = new Loai(rs.getString(1), rs.getString(2), rs.getString(3));
                 arrloai.add(sp);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
         }
-        return arrloai; 
+        return arrloai;
     }
-    public ArrayList<Ban> GetBan(int maban){
+
+    public ArrayList<Ban> GetBan(int maban) {
         ArrayList<Ban> arrBan = null;
         String sql;
-        if(maban == 0)
+        if (maban == 0) {
             sql = "Select * From ban";
-        else
-            sql = "Select * From ban Where MaBan = '"+maban+"'";
-        try{
+        } else {
+            sql = "Select * From ban Where MaBan = '" + maban + "'";
+        }
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrBan = new ArrayList<Ban>();
-            while(rs.next()){
+            while (rs.next()) {
                 Ban sp = new Ban(rs.getInt(1), rs.getString(2), rs.getString(3));
                 arrBan.add(sp);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
         }
-        return arrBan; 
-    } 
-    public int UpdateBan(Ban b){
+        return arrBan;
+    }
+
+    public int UpdateBan(Ban b) {
         int update = 0;
-        String sql = "UPDATE ban SET TenBan = '"+b.GetTenBan()+"', TrangThai = '"+b.GetTrangThai()+"' WHERE MaBan = '"+b.GetMaBan()+"'";
-        try{
+        String sql = "UPDATE ban SET TenBan = '" + b.GetTenBan() + "', TrangThai = '" + b.GetTrangThai() + "' WHERE MaBan = '" + b.GetMaBan() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Update bàn không thành công !");
         }
         return update;
-    }    
-   
-    public String GetMaLoai(String TenLoai){
+    }
+
+    public String GetMaLoai(String TenLoai) {
         String maloai = null;
-        String sql = "Select MaLoai From nhommon Where TenLoai = '"+TenLoai+"'";
-        try{
+        String sql = "Select MaLoai From nhommon Where TenLoai = '" + TenLoai + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 maloai = rs.getString(1);
             }
- 
-        }catch(SQLException ex){
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được mã loại !");
         }
-        return maloai; 
+        return maloai;
     }
-    public ArrayList<ThucDon> GetThucDonByMa(String ma){
+
+    public ArrayList<ThucDon> GetThucDonByMa(String ma) {
         ArrayList<ThucDon> arrThucDon = null;
         String sql;
 
-            sql = "Select * From thucdon Where MaMon = '"+ma+"'";
-        try{
+        sql = "Select * From thucdon Where MaMon = '" + ma + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrThucDon = new ArrayList<ThucDon>();
-            while(rs.next()){
+            while (rs.next()) {
                 ThucDon td = new ThucDon(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
                 arrThucDon.add(td);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách thực đơn !");
         }
-        return arrThucDon;        
+        return arrThucDon;
     }
-     public ArrayList<DsOrder> GetDsOrder(int ma){
+
+    public ArrayList<DsOrder> GetDsOrder(int ma) {
+//         ChiTietHD chiTietHD = new ChiTietHD();
+//         ma = chiTietHD.GetMaHD();
         ArrayList<DsOrder> arrDs = null;
         String sql;
-            sql = "Select ct.MaMon, TenMon, DVT, SoLuong, Gia, MaHoaDon From chitiethd AS ct INNER JOIN thucdon AS td ON ct.MaMon = td.MaMon Where ct.MaHoaDon = '"+ma+"'";
-        try{
+        sql = "Select ct.MaMon, TenMon, DVT, SoLuong, Gia, MaHoaDon From chitiethd AS ct INNER JOIN thucdon AS td ON ct.MaMon = td.MaMon Where ct.MaHoaDon = '" + ma + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<DsOrder>();
-            while(rs.next()){
+            while (rs.next()) {
                 DsOrder order = new DsOrder(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
                 arrDs.add(order);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách Order !");
         }
-        return arrDs;        
-    }   
-    public ChiTietHD GetDsChiTiet(String ma, int maban){
+        return arrDs;
+    }
+
+//    public ArrayList<ChiTietHoaDon> GetCTHD(int ma) {
+//        ArrayList<ChiTietHoaDon> arr = null;
+//        String sql;
+//        sql = "SELECT chitiethd.`MaChiTietHD`, chitiethd.`SoLuong`, hoadon.`MaBan`, hoadon.`TongTien`, taikhoan.`fullname`,thucdon.`TenMon`, thucdon.`DVT`, hoadon.`GioDen` FROM `hoadon` hoadon INNER JOIN `chitiethd` chitiethd ON hoadon.`MaHoaDon` = chitiethd.`MaHoaDon` INNER JOIN `taikhoan` taikhoan ON hoadon.`MaTK` = taikhoan.`id` INNER JOIN `thucdon` thucdon ON chitiethd.`MaMon` = thucdon.`MaMon` = '" + ma + "'";
+//        try {
+//            Statement st = cn.createStatement();
+//            ResultSet rs = st.executeQuery(sql);
+//            arr = new ArrayList<ChiTietHoaDon>();
+//            while (rs.next()) {
+//                //int maCTHD, int SoLuong, int MaBan, int TongTien, String NguoiBan, String TenMon, Date GioDen
+//                ChiTietHoaDon order = new ChiTietHoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getDate(7));
+//                arr.add(order);
+//            }
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Không lấy được CTHD !");
+//        }
+//        return arr;
+//    }
+
+    public ChiTietHD GetDsChiTiet(String ma, int maban) {
         ChiTietHD arrDs = null;
         String sql;
 
-            sql = "Select SoLuong, Gia, MaChiTietHD From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon Where MaMon = '"+ma+"' AND MaBan = '"+maban+"' AND hd.TrangThai = 0";
-        try{
+        sql = "Select SoLuong, Gia, MaChiTietHD From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon Where MaMon = '" + ma + "' AND MaBan = '" + maban + "' AND hd.TrangThai = 0";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 arrDs = new ChiTietHD();
                 arrDs.SetSoLuong(rs.getInt(1));
                 arrDs.SetGia(rs.getInt(2));
                 arrDs.SetMaChiTietHD(rs.getInt(3));
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách Order !");
         }
-        return arrDs;        
-    } 
-    public int UpdateChiTiet(ChiTietHD ct){
+        return arrDs;
+    }
+
+    public int UpdateChiTiet(ChiTietHD ct) {
         int update = 0;
-        String sql = "UPDATE chitiethd SET SoLuong = '"+ct.GetSoLuong()+"', Gia = '"+ct.GetGia()+"' WHERE MaChiTietHD = '"+ct.GetMaChiTietHD()+"'";
-        try{
+        String sql = "UPDATE chitiethd SET SoLuong = '" + ct.GetSoLuong() + "', Gia = '" + ct.GetGia() + "' WHERE MaChiTietHD = '" + ct.GetMaChiTietHD() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Update chi tiết không thành công !");
         }
-        return update;        
+        return update;
     }
-    public int HuyHD(HoaDon hd){
+
+    public int HuyHD(HoaDon hd) {
         int update = 0;
-        String sql = "Delete From hoadon WHERE MaHoaDon = '"+hd.GetMaHD()+"'";
-        try{
+        String sql = "Delete From hoadon WHERE MaHoaDon = '" + hd.GetMaHD() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Thanh toán không thành công !");
         }
-        return update;        
-    }    
-    public int ThanhToan(HoaDon hd){
+        return update;
+    }
+
+    public int ThanhToan(HoaDon hd) {
         int update = 0;
-        String sql = "UPDATE hoadon SET TongTien = '"+hd.GetTongTien()+"', TrangThai = 1,MaTK = '"+hd.GetMaTK()+"' WHERE MaHoaDon = '"+hd.GetMaHD()+"'";
-        try{
+        String sql = "UPDATE hoadon SET TongTien = '" + hd.GetTongTien() + "', TrangThai = 1,MaTK = '" + hd.GetMaTK() + "' WHERE MaHoaDon = '" + hd.GetMaHD() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Thanh toán không thành công !");
         }
-        return update;        
+        return update;
     }
-    public int UpDateTrangThaiBan(Ban b){
-         int update = 0;
-        String sql = "UPDATE ban SET TrangThai = '"+b.GetTrangThai()+"' WHERE MaBan = '"+b.GetMaBan()+"'";
-        try{
+
+    public int UpDateTrangThaiBan(Ban b) {
+        int update = 0;
+        String sql = "UPDATE ban SET TrangThai = '" + b.GetTrangThai() + "' WHERE MaBan = '" + b.GetMaBan() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Update trạng thái bàn không thành công !");
         }
-        return update;        
+        return update;
     }
-    public ArrayList<ThucDon> GetThucDon(String ma){
+
+    public ArrayList<ThucDon> GetThucDon(String ma) {
         ArrayList<ThucDon> arrThucDon = null;
         String sql;
-        if(ma == null){
+        if (ma == null) {
             sql = "Select * From thucdon";
-        }else{
-            sql = "Select * From thucdon Where MaLoai = '"+ma+"'";
+        } else {
+            sql = "Select * From thucdon Where MaLoai = '" + ma + "'";
         }
-        try{
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrThucDon = new ArrayList<ThucDon>();
-            while(rs.next()){
+            while (rs.next()) {
                 ThucDon td = new ThucDon(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
                 arrThucDon.add(td);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách thực đơn !");
         }
-        return arrThucDon;        
+        return arrThucDon;
     }
-    public int InsertHoaDon(HoaDon hd, String gio){
+
+    public int InsertHoaDon(HoaDon hd, String gio) {
         int insert = 0;
-        String sql = "Insert into hoadon (MaBan, GioDen, TrangThai) values ('"+hd.GetMaBan()+"', '"+gio+"', '"+hd.GetTrangThai()+"')";
-        try{
+        String sql = "Insert into hoadon (MaBan, GioDen, TrangThai) values ('" + hd.GetMaBan() + "', '" + gio + "', '" + hd.GetTrangThai() + "')";
+        try {
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
         return insert;
     }
-    public int DeleteMon(String mamon, int mahd, int maban){
+
+    public int DeleteMon(String mamon, int mahd, int maban) {
         int check = 0;
-        try{
+        try {
             String sql;
-            sql = "Delete From chitiethd Where MaMon = '"+mamon+"' AND MaHoaDon = '"+mahd+"'";
+            sql = "Delete From chitiethd Where MaMon = '" + mamon + "' AND MaHoaDon = '" + mahd + "'";
             Statement st = cn.createStatement();
             st.executeUpdate(sql);
             check = 1;
-            if(CheckDsMon(mahd, maban) == 0){
+            if (CheckDsMon(mahd, maban) == 0) {
                 check = 2;
             }
-        }catch(SQLException ex){
-            
+        } catch (SQLException ex) {
+
         }
         return check;
     }
-    public int CheckDsMon(int mahd, int maban){
+
+    public int CheckDsMon(int mahd, int maban) {
         String sql;
         int dem = 0;
-            sql = "Select * From hoadon AS hd INNER JOIN chitiethd AS ct ON ct.MaHoaDon = hd.MaHoaDon Where MaBan = '"+maban+"' AND ct.MaHoaDon = '"+mahd+"' AND TrangThai = 0";
-        try{
+        sql = "Select * From hoadon AS hd INNER JOIN chitiethd AS ct ON ct.MaHoaDon = hd.MaHoaDon Where MaBan = '" + maban + "' AND ct.MaHoaDon = '" + mahd + "' AND TrangThai = 0";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 dem++;
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách hóa đơn !");
         }
-        return dem;        
-    }        
-    public HoaDon GetHDbyMaBan(int ma){
+        return dem;
+    }
+
+    public HoaDon GetHDbyMaBan(int ma) {
         String sql;
         HoaDon arrhd = null;
-            sql = "Select * From hoadon Where MaBan = '"+ma+"' AND TrangThai = 0";
-        try{
+        sql = "Select * From hoadon Where MaBan = '" + ma + "' AND TrangThai = 0";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                arrhd = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6),rs.getInt(7));
+            while (rs.next()) {
+                arrhd = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách hóa đơn !");
         }
-        return arrhd;        
-    }    
-    public int GetMaHD(int ma){
+        return arrhd;
+    }
+
+    public int GetMaHD(int ma) {
         String sql;
         int mahd = 0;
-            sql = "Select MaHoaDon From hoadon Where MaBan = '"+ma+"' AND TrangThai = 0";
-        try{
+        sql = "Select MaHoaDon From hoadon Where MaBan = '" + ma + "' AND TrangThai = 0";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 mahd = rs.getInt(1);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Không lấy được danh sách thực đơn !");
         }
-        return mahd;        
-    } 
-    public int UpdateHD(HoaDon hd){
+        return mahd;
+    }
+
+    public int UpdateHD(HoaDon hd) {
         int update = 0;
-        String sql = "UPDATE hoadon SET GiamGia = '"+hd.GetGiamGia()+"' WHERE MaHoaDon = '"+hd.GetMaHD()+"'";
-        try{
+        String sql = "UPDATE hoadon SET GiamGia = '" + hd.GetGiamGia() + "' WHERE MaHoaDon = '" + hd.GetMaHD() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Giảm giá không thành công !");
         }
         return update;
-    }    
-    public int InsertChiTietHD(ChiTietHD cthd){
+    }
+
+    public int InsertChiTietHD(ChiTietHD cthd) {
         int insert = 0;
-        String sql = "Insert into chitiethd (MaHoaDon, MaMon, SoLuong, Gia) values ('"+cthd.GetMaHD()+"', '"+cthd.GetMaMon()+"', '"+cthd.GetSoLuong()+"', '"+cthd.GetGia()+"')";
-        try{
+        String sql = "Insert into chitiethd (MaHoaDon, MaMon, SoLuong, Gia) values ('" + cthd.GetMaHD() + "', '" + cthd.GetMaMon() + "', '" + cthd.GetSoLuong() + "', '" + cthd.GetGia() + "')";
+        try {
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Thêm chi tiết hóa đơn không thành công !"+ex.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Thêm chi tiết hóa đơn không thành công !" + ex.toString());
         }
         return insert;
     }
-    public boolean CheckLogin(TaiKhoan tk)
-    {
+
+    public boolean CheckLogin(TaiKhoan tk) {
         boolean check = false;
         String sql;
-            sql = "Select * From taikhoan Where username = '"+tk.GetUsername()+"' AND password='"+tk.GetPassword()+"'";
-        try{
+        sql = "Select * From taikhoan Where username = '" + tk.GetUsername() + "' AND password='" + tk.GetPassword() + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            
-            while(rs.next()){
-                check = true;
+
+            while (rs.next()) {
+                String user = rs.getString(2);
+                String pass = rs.getString(3);
+                //so sanh 2 chuoi
+                if (user.compareTo(tk.GetUsername()) == 0 && pass.compareTo(tk.GetPassword()) == 0) {
+                    check = true;
+                }
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi đăng nhập !");
         }
-        return check; 
+        return check;
     }
-    public int LVTK(TaiKhoan tk)
-    {
-        int lvtk =0;
+
+    public int LVTK(TaiKhoan tk) {
+        int lvtk = 0;
         String sql;
-            sql = "Select lv From taikhoan Where username = '"+tk.GetUsername()+"' AND password='"+tk.GetPassword()+"'";
-        try{
+        sql = "Select lv From taikhoan Where username = '" + tk.GetUsername() + "' AND password='" + tk.GetPassword() + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 lvtk = rs.getInt(1);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
         }
-        return lvtk; 
-    }    
-    public int InsertBan(Ban b){
+        return lvtk;
+    }
+
+    public int InsertBan(Ban b) {
         int insert = 0;
-        String sql = "Insert into ban (TenBan, TrangThai) values ('"+b.GetTenBan()+"', '"+b.GetTrangThai()+"')";
-        try{
+        String sql = "Insert into ban (TenBan, TrangThai) values ('" + b.GetTenBan() + "', '" + b.GetTrangThai() + "')";
+        try {
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
         return insert;
     }
-    public boolean DeleteBan(ArrayList<Integer> listMaBan){
+
+    public boolean DeleteBan(ArrayList<Integer> listMaBan) {
         boolean check = false;
-        try{
+        try {
             String sql;
-            for(int ma : listMaBan){
-                sql = "Delete From ban Where MaBan = '"+ma+"'";
+            for (int ma : listMaBan) {
+                sql = "Delete From ban Where MaBan = '" + ma + "'";
                 Statement st = cn.createStatement();
                 st.executeUpdate(sql);
-            } 
+            }
             check = true;
-        }catch(SQLException ex){
-            
+        } catch (SQLException ex) {
+
         }
         return check;
-    }    
-    public Vector GetNhomMon(){
+    }
+
+    public Vector GetNhomMon() {
         Vector arrloai = null;
         String sql = "Select * From nhommon";
-        try{
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrloai = new Vector();
-            Loai all = new Loai(null, "Tất cả các món","");
-            arrloai.add(all);            
-            while(rs.next()){
+            Loai all = new Loai(null, "Tất cả các món", "");
+            arrloai.add(all);
+            while (rs.next()) {
                 Loai sp = new Loai(rs.getString(1), rs.getString(2), rs.getString(3));
                 arrloai.add(sp);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
         }
-        return arrloai; 
+        return arrloai;
     }
-    public int InsertThucDon(ThucDon td){
+
+    public Vector GetLevel() {
+        Vector arrloai = null;
+        String sql = "Select * From taikhoan";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            arrloai = new Vector();
+            TaiKhoan all = new TaiKhoan(0, "", "", 1, "");
+            arrloai.add(all);
+            while (rs.next()) {
+                TaiKhoan sp = new TaiKhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+                arrloai.add(sp);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
+        }
+        return arrloai;
+    }
+
+    public int InsertThucDon(ThucDon td) {
         int insert = 0;
-        String sql = "Insert into thucdon (TenMon, MaLoai, DonGia, DVT) values ('"+td.GetTenMon()+"', '"+td.GetMaLoai()+"', '"+td.GetDonGia()+"', '"+td.GetDVT()+"')";
-        try{
+        String sql = "Insert into thucdon (TenMon, MaLoai, DonGia, DVT) values ('" + td.GetTenMon() + "', '" + td.GetMaLoai() + "', '" + td.GetDonGia() + "', '" + td.GetDVT() + "')";
+        try {
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
         return insert;
     }
-    public boolean DeleteThucDon(ArrayList<String> listMamon){
+
+    public boolean DeleteThucDon(ArrayList<String> listMamon) {
         boolean check = false;
-        try{
+        try {
             String sql;
-            for(String ma : listMamon){
-                sql = "Delete From thucdon Where MaMon = '"+ma+"'";
+            for (String ma : listMamon) {
+                sql = "Delete From thucdon Where MaMon = '" + ma + "'";
                 Statement st = cn.createStatement();
                 st.executeUpdate(sql);
-            } 
+            }
             check = true;
-        }catch(SQLException ex){
-            
+        } catch (SQLException ex) {
+
         }
         return check;
     }
-    public int UpdateThucDon(ThucDon td){
+
+    public int UpdateThucDon(ThucDon td) {
         int update = 0;
-        String sql = "UPDATE thucdon SET TenMon = '"+td.GetTenMon()+"', MaLoai = '"+td.GetMaLoai()+"', DonGia = '"+td.GetDonGia()+"', DVT = '"+td.GetDVT()+"' WHERE MaMon = '"+td.GetMaMon()+"'";
-        try{
+        String sql = "UPDATE thucdon SET TenMon = '" + td.GetTenMon() + "', MaLoai = '" + td.GetMaLoai() + "', DonGia = '" + td.GetDonGia() + "', DVT = '" + td.GetDVT() + "' WHERE MaMon = '" + td.GetMaMon() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Update món không thành công !");
         }
         return update;
-    }   
-    public int InsertLoai(Loai b){
+    }
+
+    public int InsertLoai(Loai b) {
         int insert = 0;
-        String sql = "Insert into nhommon (TenLoai, MauSac) values ('"+b.GetTenLoai()+"', '"+b.GetMauSac()+"')";
-        try{
+        String sql = "Insert into nhommon (TenLoai, MauSac) values ('" + b.GetTenLoai() + "', '" + b.GetMauSac() + "')";
+        try {
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
         return insert;
-    }    
-    public boolean DeleteNhom(ArrayList<String> lismanhom){
+    }
+
+    public boolean DeleteNhom(ArrayList<String> lismanhom) {
         boolean check = false;
-        try{
+        try {
             String sql;
-            for(String ma : lismanhom){
-                sql = "Delete From nhommon Where MaLoai = '"+ma+"'";
+            for (String ma : lismanhom) {
+                sql = "Delete From nhommon Where MaLoai = '" + ma + "'";
                 Statement st = cn.createStatement();
                 st.executeUpdate(sql);
-            } 
+            }
             check = true;
-        }catch(SQLException ex){
-            
+        } catch (SQLException ex) {
+
         }
         return check;
-    } 
-    public Loai GetLoaiByMa(String manhom){
+    }
+
+    public Loai GetLoaiByMa(String manhom) {
         Loai loai = null;
-        String sql = "Select * From nhommon Where MaLoai = '"+manhom+"'";
-        try{
+        String sql = "Select * From nhommon Where MaLoai = '" + manhom + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            if(rs.next()){
+            if (rs.next()) {
                 loai = new Loai(rs.getString(1), rs.getString(2), rs.getString(3));
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi !");
         }
-        return loai; 
-    } 
-   public int UpdateLoai(Loai b){
+        return loai;
+    }
+
+    public int UpdateLoai(Loai b) {
         int update = 0;
-        String sql = "UPDATE nhommon SET TenLoai = '"+b.GetTenLoai()+"', MauSac = '"+b.GetMauSac()+"' WHERE MaLoai = '"+b.GetMaLoai()+"'";
-        try{
+        String sql = "UPDATE nhommon SET TenLoai = '" + b.GetTenLoai() + "', MauSac = '" + b.GetMauSac() + "' WHERE MaLoai = '" + b.GetMaLoai() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Update Loại không thành công !");
         }
         return update;
     }
-    public ArrayList<ThucDon> SearchMon(String ten){
+
+    public ArrayList<ThucDon> SearchMon(String ten) {
         ArrayList<ThucDon> arrtd = null;
         String sql;
-            sql = "SELECT * FROM thucdon WHERE TenMon LIKE '"+ten+"%'";
-        try{
+        sql = "SELECT * FROM thucdon WHERE TenMon LIKE '" + ten + "%'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrtd = new ArrayList<ThucDon>();
-            while(rs.next()){
+            while (rs.next()) {
                 ThucDon td = new ThucDon(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
                 arrtd.add(td);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "lỗi !");
         }
         return arrtd;
     }
-    public ArrayList<Loai> SearchLoai(String ten){
+
+    public ArrayList<Loai> SearchLoai(String ten) {
         ArrayList<Loai> arrtd = null;
         String sql;
-            sql = "SELECT * FROM nhommon WHERE TenLoai LIKE '"+ten+"%'";
-        try{
+        sql = "SELECT * FROM nhommon WHERE TenLoai LIKE '" + ten + "%'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrtd = new ArrayList<Loai>();
-            while(rs.next()){
+            while (rs.next()) {
                 Loai td = new Loai(rs.getString(1), rs.getString(2), rs.getString(3));
                 arrtd.add(td);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "lỗi !");
         }
         return arrtd;
-    } 
-    public ArrayList<Ban> SearchBan(String ten){
+    }
+
+    public ArrayList<Ban> SearchBan(String ten) {
         ArrayList<Ban> arrtd = null;
         String sql;
-            sql = "SELECT * FROM ban WHERE TenBan LIKE '"+ten+"%'";
-        try{
+        sql = "SELECT * FROM ban WHERE TenBan LIKE '" + ten + "%'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrtd = new ArrayList<Ban>();
-            while(rs.next()){
+            while (rs.next()) {
                 Ban td = new Ban(rs.getInt(1), rs.getString(2), rs.getString(3));
                 arrtd.add(td);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "lỗi !");
         }
         return arrtd;
-    } 
-    public ArrayList<TaiKhoan> GetTaiKhoan(){
+    }
+
+    public ArrayList<TaiKhoan> GetTaiKhoan() {
         ArrayList<TaiKhoan> arrtd = null;
         String sql;
-            sql = "SELECT * FROM taikhoan WHERE lv != 1";
-        try{
+        sql = "SELECT * FROM taikhoan WHERE lv != 1";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrtd = new ArrayList<TaiKhoan>();
-            while(rs.next()){
-                TaiKhoan td = new TaiKhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),rs.getString(5));
+            while (rs.next()) {
+                TaiKhoan td = new TaiKhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
                 arrtd.add(td);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "lỗi !");
         }
         return arrtd;
     }
-    public boolean DeleteTaiKhoan(ArrayList<Integer> listMaBan){
+
+    public boolean DeleteTaiKhoan(ArrayList<Integer> listMaBan) {
         boolean check = false;
-        try{
+        try {
             String sql;
-            for(int ma : listMaBan){
-                sql = "Delete From taikhoan Where id = '"+ma+"'";
+            for (int ma : listMaBan) {
+                sql = "Delete From taikhoan Where id = '" + ma + "'";
                 Statement st = cn.createStatement();
                 st.executeUpdate(sql);
                 System.out.println(ma);
-            } 
+            }
             check = true;
-        }catch(SQLException ex){
-            
+        } catch (SQLException ex) {
+
         }
         return check;
-    } 
-    public int InserTK(TaiKhoan b){
+    }
+
+    public int InserTK(TaiKhoan b) {
         int insert = 0;
-        String sql = "Insert into taikhoan (username, password, lv,fullname) values ('"+b.GetUsername()+"', '"+b.GetPassword()+"', '"+b.GetLv()+"','"+b.getFullName()+"')";
-        try{
+        String sql = "Insert into taikhoan (username, password, lv,fullname) values ('" + b.GetUsername() + "', '" + b.GetPassword() + "', '" + b.GetLv() + "','" + b.getFullName() + "')";
+        try {
             Statement st = cn.createStatement();
             insert = st.executeUpdate(sql);
-            JOptionPane.showMessageDialog(null,"Thêm tài khoản thành công");
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null,"Tên tài khoản không được trùng");
+            JOptionPane.showMessageDialog(null, "Thêm tài khoản thành công");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Tên tài khoản không được trùng");
         }
         return insert;
-    } 
-    public TaiKhoan GetTaiKhoan(int id){
+    }
+
+    public TaiKhoan GetTaiKhoan(int id) {
         TaiKhoan td = null;
         String sql;
-            sql = "SELECT * FROM taikhoan WHERE id = '"+id+"'";
-        try{
+        sql = "SELECT * FROM taikhoan WHERE id = '" + id + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-               td  = new TaiKhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),rs.getString(5));
+            while (rs.next()) {
+                td = new TaiKhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "lỗi !");
         }
         return td;
     }
-   
-    public TaiKhoan GetTaiKhoan(String name, String pass){
+
+    public TaiKhoan GetTaiKhoan(String name, String pass) {
         TaiKhoan td = null;
         String sql;
-            sql = "SELECT * FROM taikhoan Where username = '"+name+"' AND password='"+pass+"'";
-        try{
+        sql = "SELECT * FROM taikhoan Where username = '" + name + "' AND password='" + pass + "'";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-               td  = new TaiKhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),rs.getString(5));
+            while (rs.next()) {
+                td = new TaiKhoan(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "lỗi !");
         }
         return td;
     }
-    public int UpdateTK(TaiKhoan b){
+
+    public int UpdateTK(TaiKhoan b) {
         int update = 0;
-        String sql = "UPDATE taikhoan SET username = '"+b.GetUsername()+"', password = '"+b.GetPassword()+"', lv = '"+b.GetLv()+"',fullname = '"+b.getFullName()+"' WHERE id = '"+b.GetID()+"'";
-        try{
+        String sql = "UPDATE taikhoan SET username = '" + b.GetUsername() + "', password = '" + b.GetPassword() + "', lv = '" + b.GetLv() + "',fullname = '" + b.getFullName() + "' WHERE id = '" + b.GetID() + "'";
+        try {
             Statement st = cn.createStatement();
             update = st.executeUpdate(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "lỗi !");
         }
         return update;
     }
-public ArrayList<HoaDon> GetDSHD(){
+
+    public ArrayList<HoaDon> GetDSHD() {
         ArrayList<HoaDon> arrDs = null;
         String sql;
-            sql = "Select * From hoadon Where TrangThai = 1";
-        try{
+        sql = "Select * From hoadon Where TrangThai = 1";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<HoaDon>();
-            while(rs.next()){
-                HoaDon order = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6),rs.getInt(7));
+            while (rs.next()) {
+                HoaDon order = new HoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
                 arrDs.add(order);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
-        return arrDs;        
+        return arrDs;
     }
-     public ArrayList<ThucDon> GetDsMonBan(){
+
+    public ArrayList<ThucDon> GetDsMonBan() {
         ArrayList<ThucDon> arrDs = null;
         String sql;
-            sql = "Select TenMon, MaMon, DVT From thucdon WHERE MaMon in (Select MaMon From chitiethd) AND hoadon.TrangThai = 1";
-        try{
+        sql = "Select TenMon, MaMon, DVT From thucdon WHERE MaMon in (Select MaMon From chitiethd) AND hoadon.TrangThai = 1";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<ThucDon>();
-            while(rs.next()){
+            while (rs.next()) {
                 ThucDon order = new ThucDon();
                 order.SetTenMon(rs.getString(1));
                 order.SetMaMon(rs.getString(2));
                 order.SetDVT(rs.getString(3));
                 arrDs.add(order);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
-        return arrDs;        
-    }  
-     public ArrayList<ThucDon> GetChiTietMonByMa(){
+        return arrDs;
+    }
+
+    public ArrayList<ThucDon> GetChiTietMonByMa() {
         ArrayList<ThucDon> arrDs = null;
         String sql;
-            sql = "SELECT TenMon, MaMon, DVT FROM thucdon where MaMon in (Select MaMon From chitiethd)";
-        try{
+        sql = "SELECT TenMon, MaMon, DVT FROM thucdon where MaMon in (Select MaMon From chitiethd)";
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<ThucDon>();
-            while(rs.next()){
+            while (rs.next()) {
                 ThucDon order = new ThucDon();
                 order.SetTenMon(rs.getString(1));
                 order.SetMaMon(rs.getString(2));
                 order.SetDVT(rs.getString(3));
                 arrDs.add(order);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
-        return arrDs;        
-    }  
-     public ArrayList<DsOrder> GetGiaSoLuong(String ma){
+        return arrDs;
+    }
+
+    public ArrayList<DsOrder> GetGiaSoLuong(String ma) {
         ArrayList<DsOrder> arrDs = null;
         String sql;
-            sql = "Select Gia, SoLuong, TenMon, DVT From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon INNER JOIN thucdon AS td ON td.MaMon = ct.MaMon Where hd.TrangThai = 1 AND ct.MaMon = '"+ma+"'";
-        try{
-            
+        sql = "Select Gia, SoLuong, TenMon, DVT From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon INNER JOIN thucdon AS td ON td.MaMon = ct.MaMon Where hd.TrangThai = 1 AND ct.MaMon = '" + ma + "'";
+        try {
+
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<DsOrder>();
-            while(rs.next()){
-                
+            while (rs.next()) {
+
                 DsOrder order = new DsOrder();
                 order.SetGia(rs.getInt(1));
                 order.SetSoLuong(rs.getInt(2));
@@ -678,23 +793,25 @@ public ArrayList<HoaDon> GetDSHD(){
                 order.SetDVT(rs.getString(4));
                 arrDs.add(order);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
-        return arrDs;        
+        return arrDs;
     }
-     public ArrayList<DsOrder> GetHdByDate(String d1,String d2, String m){
+
+    public ArrayList<DsOrder> GetHdByDate(String d1, String d2, String m) {
         ArrayList<DsOrder> arrDs = null;
         String sql;
-        if(d1.equals(d2)){
-            sql = "Select Gia, SoLuong, TenMon, DVT From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon INNER JOIN thucdon AS td ON td.MaMon = ct.MaMon Where hd.TrangThai = 1 AND hd.GioDen >= '"+d1+"' AND ct.MaMon ='"+m+"'";
-        }else
-            sql = "Select Gia, SoLuong, TenMon, DVT From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon INNER JOIN thucdon AS td ON td.MaMon = ct.MaMon Where hd.TrangThai = 1 AND hd.GioDen BETWEEN '"+d1+"' AND '"+d2+"' AND ct.MaMon ='"+m+"'";
-        try{
-            
+        if (d1.equals(d2)) {
+            sql = "Select Gia, SoLuong, TenMon, DVT From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon INNER JOIN thucdon AS td ON td.MaMon = ct.MaMon Where hd.TrangThai = 1 AND hd.GioDen >= '" + d1 + "' AND ct.MaMon ='" + m + "'";
+        } else {
+            sql = "Select Gia, SoLuong, TenMon, DVT From chitiethd AS ct INNER JOIN hoadon AS hd ON ct.MaHoaDon = hd.MaHoaDon INNER JOIN thucdon AS td ON td.MaMon = ct.MaMon Where hd.TrangThai = 1 AND hd.GioDen BETWEEN '" + d1 + "' AND '" + d2 + "' AND ct.MaMon ='" + m + "'";
+        }
+        try {
+
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<DsOrder>();
-            while(rs.next()){
+            while (rs.next()) {
                 DsOrder order = new DsOrder();
                 order.SetGia(rs.getInt(1));
                 order.SetSoLuong(rs.getInt(2));
@@ -702,32 +819,34 @@ public ArrayList<HoaDon> GetDSHD(){
                 order.SetDVT(rs.getString(4));
                 arrDs.add(order);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
         }
-        return arrDs;        
-    } 
-     public ArrayList<DsOrder> GetCtHDByDate(int ma, String d1, String d2){
+        return arrDs;
+    }
+
+    public ArrayList<DsOrder> GetCtHDByDate(int ma, String d1, String d2) {
         ArrayList<DsOrder> arrDs = null;
         String sql;
-        if(d1.equals(d2))
-            sql = "Select ct.MaMon, TenMon, DVT, SoLuong, Gia, ct.MaHoaDon From chitiethd AS ct INNER JOIN thucdon AS td ON ct.MaMon = td.MaMon INNER JOIN hoadon AS hd ON hd.MaHoaDon = ct.MaHoaDon Where ct.MaHoaDon = '"+ma+"' AND hd.GioDen >= '"+d1+"'";
-            else
-            sql = "Select ct.MaMon, TenMon, DVT, SoLuong, Gia, ct.MaHoaDon From chitiethd AS ct INNER JOIN thucdon AS td ON ct.MaMon = td.MaMon INNER JOIN hoadon AS hd ON hd.MaHoaDon = ct.MaHoaDon Where ct.MaHoaDon = '"+ma+"' AND hd.GioDen BETWEEN '"+d1+"' AND '"+d2+"'";
-        try{
+        if (d1.equals(d2)) {
+            sql = "Select ct.MaMon, TenMon, DVT, SoLuong, Gia, ct.MaHoaDon From chitiethd AS ct INNER JOIN thucdon AS td ON ct.MaMon = td.MaMon INNER JOIN hoadon AS hd ON hd.MaHoaDon = ct.MaHoaDon Where ct.MaHoaDon = '" + ma + "' AND hd.GioDen >= '" + d1 + "'";
+        } else {
+            sql = "Select ct.MaMon, TenMon, DVT, SoLuong, Gia, ct.MaHoaDon From chitiethd AS ct INNER JOIN thucdon AS td ON ct.MaMon = td.MaMon INNER JOIN hoadon AS hd ON hd.MaHoaDon = ct.MaHoaDon Where ct.MaHoaDon = '" + ma + "' AND hd.GioDen BETWEEN '" + d1 + "' AND '" + d2 + "'";
+        }
+        try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             arrDs = new ArrayList<DsOrder>();
-            while(rs.next()){
+            while (rs.next()) {
                 DsOrder order = new DsOrder(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
                 arrDs.add(order);
             }
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Không lấy được danh sách chi tiết hoa đơn !"+ex.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Không lấy được danh sách chi tiết hoa đơn !" + ex.toString());
         }
-        return arrDs;        
-    }     
-     
-     public String getFullName(int MaTK){
+        return arrDs;
+    }
+
+    public String getFullName(int MaTK) {
         String fullname = null;
         String sql = "SELECT fullname FROM hoadon,taikhoan  WHERE (hoadon.MaTK = taikhoan.id) AND MaTK ='" + MaTK + "'";
         try {
@@ -741,5 +860,23 @@ public ArrayList<HoaDon> GetDSHD(){
             JOptionPane.showMessageDialog(null, "Không lấy Tên!");
         }
         return fullname;
+    }
+
+    public  List<HoaDon> GeDsOrder(int ma) {
+        List<HoaDon> listProduct = new ArrayList();
+        HoaDon hd = new HoaDon();
+        String sql = "SELECT chitiethd.`MaChiTietHD`, chitiethd.`SoLuong`, hoadon.`MaBan`, hoadon.`TongTien`, taikhoan.`fullname`, thucdon.`TenMon`, thucdon.`DVT`, hoadon.`GioDen` FROM `hoadon` hoadon INNER JOIN `chitiethd` chitiethd ON hoadon.`MaHoaDon` = chitiethd.`MaHoaDon` INNER JOIN `taikhoan` taikhoan ON hoadon.`MaTK` = taikhoan.`id` INNER JOIN `thucdon` thucdon ON chitiethd.`MaMon` = thucdon.`MaMon` WHERE hoadon.`MaHoaDon` ='" + ma + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            //int mahoadon, int giamgia, int maban, Date gioden, int tongtien, int trangthai,int matk
+            while (rs.next()) {
+                listProduct.add(new HoaDon(hd.GetMaHD(), hd.GetGiamGia(), hd.GetMaBan(), hd.GetGioDen(), hd.GetTongTien(), hd.GetTrangThai(), hd.GetMaTK()));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listProduct;
     }
 }

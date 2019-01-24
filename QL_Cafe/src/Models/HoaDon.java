@@ -5,7 +5,9 @@
  */
 package Models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -34,7 +36,6 @@ public class HoaDon {
         GioDen=gioden;
         MaTK = matk;
     } 
-     
     public void SetMaHD(int ma){
         MaHoaDon = ma;
     }

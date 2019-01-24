@@ -6,26 +6,50 @@
 package Interface.BanHang;
 
 import Interface.Run;
+import Interface.ThongKe.thongkeRepor;
 import Models.Ban;
+import Models.DsOrder;
 import Models.HoaDon;
 import Mysql.ConnectSQL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.swing.JRViewer;
 
 /**
  *
  * @author CanhDinh
  */
 public class DLThanhToan extends javax.swing.JDialog {
+
     NumberFormat chuyentien = new DecimalFormat("#,###,###");
     ConnectSQL cn = new ConnectSQL();
     /**
      * Creates new form DLThanhToan
+     *
      * @param parent
      */
     int tong, MaHD;
     int MaBan;
+
     public DLThanhToan(java.awt.Frame parent, boolean modal, int tongtien, String tenban, int maban, int mahd) {
         super(parent, modal);
         initComponents();
@@ -33,7 +57,8 @@ public class DLThanhToan extends javax.swing.JDialog {
         MaHD = mahd;
         MaBan = maban;
         jLabel1.setText(tenban + " - Thanh toán");
-        lblTongTien.setText(String.valueOf(chuyentien.format(tongtien) +" VNĐ"));
+        lblTongTien.setText(String.valueOf(chuyentien.format(tongtien) + " VNĐ"));
+
     }
 
     /**
@@ -187,18 +212,20 @@ public class DLThanhToan extends javax.swing.JDialog {
     }//GEN-LAST:event_btnhuyActionPerformed
 
     private void txtTienDuaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienDuaKeyReleased
-        try{
-            int tiendua =  Integer.parseInt(txtTienDua.getText());
-            if(tiendua - tong >= 0)
-            lbltienthoi.setText(String.valueOf(chuyentien.format(tiendua - tong))+ " VNĐ");
-        }catch(Exception e){
+        try {
+            int tiendua = Integer.parseInt(txtTienDua.getText());
+            if (tiendua - tong >= 0) {
+                lbltienthoi.setText(String.valueOf(chuyentien.format(tiendua - tong)) + " VNĐ");
+            }
+        } catch (Exception e) {
             txtTienDua.setText("");
 
         }        // TODO add your handling code here:
     }//GEN-LAST:event_txtTienDuaKeyReleased
 
+
     private void btnxacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxacnhanActionPerformed
-        int n = Run.tk.GetID();    
+        int n = Run.tk.GetID();
         if (txtTienDua.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Bạn Chưa Nhập Tiền");
         } else {
@@ -213,20 +240,85 @@ public class DLThanhToan extends javax.swing.JDialog {
             if (tong > Integer.parseInt(txtTienDua.getText())) {
                 JOptionPane.showMessageDialog(null, "Số Tiền Không Phù Hợp");
             } else {
-                cn.ThanhToan(hd);
-                jpBanHang.bh.FillBan();
-                JpGoiMon.gm.removeAll();
-                jpBanHang.bh.fillLb();
-                this.dispose();
+                try {
+                    cn.ThanhToan(hd);
+                    jpBanHang.bh.FillBan();
+                    JpGoiMon.gm.removeAll();
+                    jpBanHang.bh.fillLb();
+                    DLCTHD dlcthd = new DLCTHD();
+                    dlcthd.setVisible(true);
+                    this.dispose();
+                } catch (JRException ex) {
+                    Logger.getLogger(DLThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(DLThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DLThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
         }
+
+//        ArrayList<DsOrder> arrTable = cn.GetDsOrder(MaHD);
+//        for(DsOrder or : arrTable){
+//            int maHD = or.GetMaHD();
+//            System.out.println("MaHD: "+maHD);
+//            int Gia = or.GetGia();
+//            System.out.println("Gia: "+Gia);
+//            int SL = or.GetSoLuong();
+//            System.out.println("SL: "+SL);
+//            String TM = or.GetTenMon();
+//            System.out.println("TenMon: "+TM);
+//            String MM = or.GetMaMon();
+//            System.out.println("MM: "+MM);
+//            String DVT = or.GetDVT();
+//            System.out.println("DVT: "+DVT);
+//        }
+//          ArrayList<ChiTietHoaDon> arrHD = cn.GetCTHD(MaHD);
+//          for(ChiTietHoaDon hd : arrHD){
+//               //int maCTHD, int SoLuong, int MaBan, int TongTien, String NguoiBan, String TenMon, Date GioDen
+//              int maCTHD = hd.getMaCTHD();
+//              System.out.println("MaCTHD: "+maCTHD);
+//              int SoLuong = hd.getSoLuong();
+//              System.out.println("SL: "+SoLuong);
+//              int MaBan = hd.getMaBan();
+//              System.out.println("MaBan: "+MaBan);
+//              int TongTien = hd.getTongTien();
+//              System.out.println("TongTien: "+TongTien);
+//              String nguoiban = hd.getNguoiBan();
+//              System.out.println("nguoiban: "+nguoiban);
+//              String tenmon = hd.getTenMon();
+//              System.out.println("tenmon: "+tenmon);
+//              Date gioden = hd.getGioDen();
+//              System.out.println("gioden"+gioden);
+//          }
+//        int n = Run.tk.GetID();
+//        if (txtTienDua.getText().equals("")) {
+//            JOptionPane.showMessageDialog(null, "Bạn Chưa Nhập Tiền");
+//        } else {
+//            Ban b = new Ban();
+//            b.SetTrangThai("Trống");
+//            b.SetMaBan(MaBan);
+//            cn.UpDateTrangThaiBan(b);
+//            HoaDon hd = new HoaDon();
+//            hd.SetTongTien(tong);
+//            hd.SetMaHD(MaHD);
+//            hd.SetMaTK(n);
+//            if (tong > Integer.parseInt(txtTienDua.getText())) {
+//                JOptionPane.showMessageDialog(null, "Số Tiền Không Phù Hợp");
+//            } else {
+//                cn.ThanhToan(hd);
+//                jpBanHang.bh.FillBan();
+//                JpGoiMon.gm.removeAll();
+//                jpBanHang.bh.fillLb();
+//                this.dispose();
+//            }
+//        }
+
     }//GEN-LAST:event_btnxacnhanActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnhuy;

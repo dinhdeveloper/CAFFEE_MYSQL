@@ -7,6 +7,8 @@ package Interface.QuanLy;
 
 import Models.TaiKhoan;
 import Mysql.ConnectSQL;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +24,21 @@ public class DL_Them_TaiKhoan extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+//    public void Fillcbb() {
+//        Vector Vcbb = cn.GetLevel();
+//
+//        if (Vcbb != null) {
+//            DefaultComboBoxModel cbbmodel = new DefaultComboBoxModel(Vcbb);
+//            cbbLevel.setModel(cbbmodel);
+//            System.out.println(cbbmodel);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Không có nhóm nào !");
+//        }
+//
+//    }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +60,7 @@ public class DL_Them_TaiKhoan extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtFullname = new javax.swing.JTextField();
+        cbbLevel = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -86,6 +103,8 @@ public class DL_Them_TaiKhoan extends javax.swing.JDialog {
 
         jLabel5.setText("Họ và tên:");
 
+        cbbLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -104,7 +123,10 @@ public class DL_Them_TaiKhoan extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtten)
                                 .addComponent(txtpass, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                                .addComponent(txtlv, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(txtlv, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(txtFullname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
@@ -136,7 +158,8 @@ public class DL_Them_TaiKhoan extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtlv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtlv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -184,7 +207,10 @@ public class DL_Them_TaiKhoan extends javax.swing.JDialog {
         }        
         TaiKhoan tk = new TaiKhoan();
         tk.SetUsername(txtten.getText());
-        tk.SetPassword(txtpass.getText());
+        tk.SetPassword(txtpass.getText()); 
+//        int lv = ((TaiKhoan)cbbLevel.getSelectedItem()).GetLv();
+//        System.out.println("vl"+lv);
+//        tk.SetLv(lv);
         tk.SetLv(Integer.parseInt(txtlv.getText()));
         tk.setFullName(txtFullname.getText());
         int in = cn.InserTK(tk);
@@ -216,6 +242,7 @@ public class DL_Them_TaiKhoan extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbbLevel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

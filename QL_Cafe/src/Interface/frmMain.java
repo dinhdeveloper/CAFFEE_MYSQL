@@ -46,6 +46,7 @@ public final class frmMain extends javax.swing.JFrame {
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        nhacnen = new MP3("src/Sound/Fur Elise - Richard Clayderman.MP3");
 //        nhacnen.play();
+        btnKho.setEnabled(false);
         fill();
         Clock clock = new Clock();
         clock.start();
@@ -55,7 +56,6 @@ public final class frmMain extends javax.swing.JFrame {
             btnThongKe.setEnabled(false);
             btnKho.setEnabled(false);
         }
-
     }
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss_a");
 

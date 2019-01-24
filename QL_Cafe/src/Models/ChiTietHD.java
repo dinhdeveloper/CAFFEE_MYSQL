@@ -5,6 +5,9 @@
  */
 package Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author CanhDinh
@@ -27,6 +30,7 @@ public class ChiTietHD {
         SoLuong =soluong;
         Gia = gia;
     }
+    
     public void SetMaChiTietHD(int machitiet){
         MaChiTietHD = machitiet;
     }
