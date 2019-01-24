@@ -51,7 +51,7 @@ public class DLCTHD extends javax.swing.JPanel {
         
         try {
             
-            String link = "src\\Interface\\BanHang\\hoadonReport.jrxml";
+            String link = "src\\Interface\\BanHang\\report.jrxml";
             Connection conn = mySqlConnectt();
             JasperReport jr = JasperCompileManager.compileReport(link);
             JasperPrint jp = JasperFillManager.fillReport(jr, null, conn);

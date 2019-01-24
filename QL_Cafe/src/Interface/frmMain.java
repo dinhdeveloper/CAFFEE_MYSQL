@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interface;
 
 import Interface.BanHang.jpBanHang;
@@ -44,8 +39,8 @@ public final class frmMain extends javax.swing.JFrame {
     public frmMain() {
         initComponents();
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        nhacnen = new MP3("src/Sound/Fur Elise - Richard Clayderman.MP3");
-//        nhacnen.play();
+        nhacnen = new MP3("src/Sound/Fur Elise - Richard Clayderman.MP3");
+        nhacnen.play();
         btnKho.setEnabled(false);
         fill();
         Clock clock = new Clock();
